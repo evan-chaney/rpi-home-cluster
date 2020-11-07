@@ -1,0 +1,27 @@
+---
+- name: Bootstrap PI cluster
+  hosts: pis
+  remote_user: pi
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: Install Python3
+      apt:
+        name: python3
+        state: latest
+    - name: Dist Upgrade
+      apt:
+        upgrade: dist
+    - name: Remove dependencies that are no longer required
+      apt:
+        autoremove: yes
+
+    - name: Set healthcheck cronjob
+      cron:
+        name: "Ping healthcheck.io"
+        minute: '*/15'
+        hour: "*"
+        job: "curl https://hc-ping.com/{{healthcheck_id}}"
+        user: pi
+
