@@ -21,7 +21,7 @@
       path: /mnt/rpi
       fstype: vfat
       state: mounted
-  - name: Create SSH file
+  - name: Create SSH file so SSH is enabled
     file:
       path: /mnt/rpi/ssh
       state: touch
@@ -31,3 +31,15 @@
       path: /mnt/rpi
       state: unmounted
 
+  - name: Mount / on SDcard
+    ansible.posix.mount:
+      src: /dev/sdc2
+      path: /mnt/rpi
+      fstype: ext4
+      state: mounted
+  # Add local SSH key to pi user
+  - name: Unmount / on SDcard
+    ansible.posix.mount:
+      src: /dev/sdc2
+      path: /mnt/rpi
+      state: unmounted
