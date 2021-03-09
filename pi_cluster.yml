@@ -23,6 +23,6 @@
         name: "Ping healthcheck.io"
         minute: '*/15'
         hour: "*"
-        job: "curl https://hc-ping.com/{{healthcheck_id}}"
+        job: "curl https://hc-ping.com/{{ healthcheck_id }}"
         user: pi
 
