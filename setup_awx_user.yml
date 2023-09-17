@@ -1,0 +1,23 @@
+---
+
+- hosts: all
+  remote_user: evan
+  become: yes
+  become_user: root
+
+  tasks:
+  - name: Create ansible user
+    user:
+      name: ansible
+  - name: Add SSH key for ansible user
+    ansible.posix.authorized_key:
+      user: ansible
+  - name: Add ansible sudoers
+    lineinfile:
+      dest: /etc/sudoers
+      state: present
+      regexp: '^ansible'
+      line: 'ansible ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'
+
+
